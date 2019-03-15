@@ -1,20 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char *argv[]) {
-    for (int i = 1; i < argc; i++) {
-        FILE *f;
-        int c;
+static void do_cat(FILE *f);
 
-        f = fopen(argv[i], "r");
-        if (!f) {
-            perror(argv[i]);
-            exit(1);
+int main(int argc, char *argv[]) {
+    if (argc == 1) {
+        do_cat(stdin);
+    }
+    else {
+        for (int i = 1; i < argc; i++) {
+            FILE *f;
+
+            f = fopen(argv[i], "r");
+            if (!f) {
+                perror(argv[i]);
+                exit(1);
+            }
+            do_cat(f);
+            fclose(f);
         }
-        while ((c = fgetc(f)) != EOF) {
-            if (putchar(c) < 0) exit(1);
-        }
-        fclose(f);
     }
     exit(0);
+}
+
+static void do_cat(FILE *f) {
+    while ((int c = fgetc(f)) != EOF) {
+        if (putchar(c) < 0) exit(1);
+    }
 }
