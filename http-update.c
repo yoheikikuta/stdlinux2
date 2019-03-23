@@ -103,7 +103,7 @@ static struct option longopts[] = {
     {0, 0, 0, 0}
 };
 
-int　main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
     int server_fd;
     char *port = NULL;
     char *docroot;
